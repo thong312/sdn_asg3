@@ -9,6 +9,11 @@ userRouter
 .route('/')
 .get(orchidController.getAllOrchid)
 
+// userRouter
+// .route('/comment')
+// .get(orchidController.getAllComment)
+
+
 userRouter
 .route('/profile')
 .get(ensureAuthenticated,userController.profile)

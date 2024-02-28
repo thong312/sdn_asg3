@@ -1,50 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title%></title>
+    <title><%= title %></title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Add custom CSS to make table borders blurred */
+        .table td,
+        .table th {
+            border-color: rgba(0, 0, 0, 0.1); /* Adjust opacity here */
+        }
+    </style>
 </head>
+
 <body>
     <%- include('partials/header') %>
-    <div class="container" style="height: 100vh;">
-        <div class="columns">
-            <div class="column is-two-thirds">
-                <a href="/" class="button is-primary">Back</a>
-                <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth" style="margin-top: 1rem;">
-                    <thead>
-                        <tr>
-                            <th><abbr style="text-decoration: none;" title="username">Username</abbr></th>
-                            <th><abbr style="text-decoration: none;" title="name">Name</abbr></th>
-                            <th><abbr style="text-decoration: none;" title="YOB">YOB</abbr></th>
-                            <th><abbr style="text-decoration: none;" title="isAdmin">Admin</abbr></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% users.forEach(function(account, index){ %>
-
-                            <tr>
-                                <td>
-                                    <%= account.username %>
-                                </td>
-                                <td>
-                                    <%= account.name %>
-                                </td>
-                                <td>
-                                    <%= account.YOB %>
-                                </td>
-                                <td>
-                                    <%= account.isAdmin? "Yes" : "No" %>
-                                </td>
-                            </tr>
-                            <% }); %>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+    <div class="container" style="min-height: 90vh;">
+        <a href="/" class="btn btn-primary mb-3">Back</a>
+        <table class="table table-bordered table-striped table-hover" style="margin-top: 1rem;">
+            <thead>
+                <tr>
+                    <th scope="col">Username</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">YOB</th>
+                    <th scope="col">Admin</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% users.forEach(function(account, index){ %>
+                <tr>
+                    <td><%= account.username %></td>
+                    <td><%= account.name %></td>
+                    <td><%= account.YOB %></td>
+                    <td><%= account.isAdmin ? "Yes" : "No" %></td>
+                </tr>
+                <% }); %>
+            </tbody>
+        </table>
     </div>
-    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-<script src="/javascripts/utils.js"></script>
-<script src="/javascripts/matchPassword.js"></script>
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+    <script src="/javascripts/utils.js"></script>
+    <script src="/javascripts/matchPassword.js"></script>
 </body>
+
 </html>

@@ -64,7 +64,7 @@
                                 <%= category.categoryName %>
                             </td>
                             <td>
-                                <button class="btn btn-primary" onclick="showHide('<%= index %>')" id="activeActionButton<%= index %>">Show Action</button>
+                                <h1  onclick="showHide('<%= index %>')" id="activeActionButton<%= index %>">...</h1>
                                 <div id="actionButton<%= index %>" style="display: none;">
                                     <a href="<%= baseURL %>/delete/<%= category._id %>" class="btn btn-danger" onclick="return confirm('Confirm to delete?')">Delete</a>
                                     <a href="<%= baseURL %>/edit/<%= category._id %>" class="btn btn-warning">Edit</a>

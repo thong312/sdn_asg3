@@ -16,10 +16,10 @@ function showHide(index) {
     var actionButton = document.getElementById("actionButton"+index);
     if (actionButton.style.display === "none") {
       actionButton.style.display = "block";
-      activeActionButton.innerHTML = "Hide Action";
+      activeActionButton.innerHTML = "...";
     } else {
       actionButton.style.display = "none";
-      activeActionButton.innerHTML = "Show Action";
+      activeActionButton.innerHTML = "...";
     }
 }
 

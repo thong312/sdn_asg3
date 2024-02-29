@@ -18,7 +18,7 @@ var app = express();
 const url = "mongodb://127.0.0.1:27017/Api_Ass3";
 const connect = mongoose.connect(url)
 connect.then((db)=>{
-  console.log("Connected to the Database");
+  console.log("OK");
 }).catch((err)=>{
   console.log(err);
 })

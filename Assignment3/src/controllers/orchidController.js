@@ -62,7 +62,13 @@ class orchidController {
     getOrchidById(req, res, next) {
         orchids.findById(req.params.id)
             .populate('category', 'categoryName')
-            .populate( 'comments')
+            .populate({
+                path: 'comments',
+                populate: {
+                    path: 'author',
+                    select: 'name'
+                }
+            })
             .then((orchid) => {
                 res.render('orchidDetail', {
                     title: orchid.name,
@@ -74,23 +80,23 @@ class orchidController {
 
     addComment(req, res, next) {
         const orchidId = req.params.id;
-        const { rating, comment } = req.body;
+        const { rating, comment} = req.body;
         const userId = req.user.id; // Lấy id của user đã được đảm bảo authenticated
-    
+
         orchids.findById(orchidId)
             .then(orchid => {
                 if (!orchid) {
                     return res.status(404).render('error', { error: 'Orchid not found' });
                 }
-    
+
                 const newComment = {
                     rating,
                     comment,
                     author: userId
                 };
-    
+
                 orchid.comments.push(newComment);
-    
+
                 return orchid.save();
             })
             .then(orchid => {
@@ -98,8 +104,8 @@ class orchidController {
             })
             .catch(next);
     }
-    
-    
+
+
 
     getOrchidEditById(req, res, next) {
         let categories = []

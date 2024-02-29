@@ -44,7 +44,7 @@ class orchidController {
         orchids.findOne({ name: orchid.name }).then((orchidName) => {
             if (orchidName) {
                 res.redirect('/orchids');
-                console.log('Orchid already exists');
+                req.flash('error', 'An orchid with the same name already exists.');
             } else {
                 orchid.save().then(() => {
                     res.redirect('/orchids');
@@ -55,6 +55,7 @@ class orchidController {
 
     deleteOrchid(req, res, next) {
         orchids.findByIdAndDelete(req.params.id).then(() => {
+            req.flash('success_msg', 'successfully.');
             res.redirect('/orchids');
         }).catch(next);
     }
@@ -125,10 +126,36 @@ class orchidController {
 
     updateOrchidById(req, res, next) {
         req.body.isNatural == "on" ? req.body.isNatural = true : req.body.isNatural = false;
-        orchids.updateOne({ _id: req.params.id }, req.body).then(() => {
-            res.redirect('/orchids');
-        }).catch(next);
+    
+        // Find the orchid by ID
+        orchids.findById(req.params.id)
+            .then(orchid => {
+                if (!orchid) {
+                    // Orchid not found
+                    req.flash('error', 'Orchid not found.');
+                    return res.redirect('/orchids');
+                }
+    
+                // Check if an orchid with the updated name already exists
+                return orchids.findOne({ name: req.body.name, _id: { $ne: req.params.id } })
+                    .then(existingOrchid => {
+                        if (existingOrchid) {
+                            // Orchid with the same name already exists
+                            req.flash('error', 'An orchid with the same name already exists.');
+                            return res.redirect('/orchids');
+                        } else {
+                            // Update the orchid
+                            return orchids.updateOne({ _id: req.params.id }, req.body)
+                                .then(() => {
+                                    req.flash('success_msg', 'Orchid updated successfully.');
+                                    return res.redirect('/orchids');
+                                });
+                        }
+                    });
+            })
+            .catch(next);
     }
+    
 
     searchOrchid(req, res, next) {
         orchids.find({ name: { $regex: req.query.name } }).then((orchid) => {

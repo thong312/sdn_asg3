@@ -7,118 +7,141 @@
     <title>
         <%= title%>
     </title>
+    <script>
+        setTimeout(function () {
+            var successMessage = document.getElementById('successMessage');
+            if (successMessage) {
+                successMessage.style.display = 'none';
+            }
+        }, 3000);
+    </script>
 </head>
 <%- include('partials/header') %>
 
-<body>
-    <section class="main-content vh-100" style="min-height: 150vh;">
-        <a href="/" class="btn btn-primary" style="margin-top: 1rem">Back</a>
-        <div class="container">
-            <div class="section">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title">User Information</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-10">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <p class="fs-6"><i class="fas fa-user"></i> Name: <%= user.name %></p>
-                                        <p class="fs-6"><i class="fas fa-envelope"></i> Username: <%= user.username %></p>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p class="fs-6"><i class="fas fa-calendar"></i> Year of Birth: <%= user.YOB %></p>
+    <body>
+        <section class="main-content vh-100" style="min-height: 150vh; ">
+            <div class="container" style="min-height: 100vh; margin-top: 10px;" >
+                <div class="section">
+                    <div class="card" style="background: linear-gradient(45deg, #49a09d, #5f2c82);">
+                        <div class="card-header">
+                            <h5 class="card-title">User Information</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p class="fs-6"><i class="fas fa-user"></i> Name: <%= user.name %>
+                                            </p>
+                                            <p class="fs-6"><i class="fas fa-envelope"></i> E-mail: <%= user.username %>
+                                            </p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class="fs-6"><i class="fas fa-calendar"></i> Year of Birth: <%= user.YOB
+                                                    %>
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <br />
-                <div class="card">
-                    <% if(success_msg != ''){ %>
-                    <div class="alert alert-success" role="alert">
-                        <%= success_msg %>
-                    </div>
-                    <% } %>
-                    <% if(error_msg != ''){ %>
-                    <div class="alert alert-warning" role="alert">
-                        <%= error_msg %>
-                    </div>
-                    <% } %>
-                    <% if(error != ''){ %>
-                    <div class="alert alert-warning" role="alert">
-                        <%= error %>
-                    </div>
-                    <% } %>
-                    <div class="card-header">
-                        <h5 class="card-title">Edit Profile</h5>
-                    </div>
-                    <div class="card-body">
-                        <form action="/profile" method="POST">
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="name" name="name" value="<%= user.name %>" required>
+                    <br />
+                    <div class="card" style="background: linear-gradient(45deg, #49a09d, #5f2c82);">
+                        <% if(success_msg !='' ){ %>
+                            <div id="successMessage" class="alert alert-success" role="alert">
+                                <%= success_msg %>
                             </div>
-                            <div class="mb-3">
-                                <label for="username" class="form-label">Username</label>
-                                <input type="email" class="form-control" id="username" name="username" value="<%= user.username %>" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="YOB" class="form-label">Year of Birth</label>
-                                <input type="number" class="form-control" id="YOB" name="YOB" value="<%= user.YOB %>" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
+                            <% } %>
+                                <% if(error_msg !='' ){ %>
+                                    <div id="successMessage" class="alert alert-warning" role="alert">
+                                        <%= error_msg %>
+                                    </div>
+                                    <% } %>
+                                        <% if(error !='' ){ %>
+                                            <div id="successMessage" class="alert alert-warning" role="alert">
+                                                <%= error %>
+                                            </div>
+                                            <% } %>
+                                                <div class="card-header">
+                                                    <h5 class="card-title">Edit Profile</h5>
+                                                </div>
+                                                <div class="card-body">
+                                                    <form action="/profile" method="POST">
+                                                        <div class="mb-3">
+                                                            <label for="name" class="form-label">Name</label>
+                                                            <input type="text" class="form-control" id="name"
+                                                                name="name" value="<%= user.name %>" required>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="username" class="form-label">Username</label>
+                                                            <input type="email" class="form-control" id="username"
+                                                                name="username" value="<%= user.username %>" required>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="YOB" class="form-label">Year of Birth</label>
+                                                            <input type="number" class="form-control" id="YOB"
+                                                                name="YOB" value="<%= user.YOB %>" required>
+                                                        </div>
+                                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                                    </form>
+                                                </div>
                     </div>
-                </div>
-                <br />
-                <% if(successPassword_msg != ''){ %>
-                <div class="alert alert-success" role="alert">
-                    <%= successPassword_msg %>
-                </div>
-                <% } %>
-                <% if(errorPassword_msg != ''){ %>
-                <div class="alert alert-warning" role="alert">
-                    <%= errorPassword_msg %>
-                </div>
-                <% } %>
-                <% if(errorPassword.length > 0){ %>
-                <% errorPassword.forEach( (error) => { %>
-                <div class="alert alert-warning" role="alert">
-                    <%= error.msg %>
-                </div>
-                <% }) %>
-                <% } %>
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title">Change Password</h5>
-                    </div>
-                    <div class="card-body">
-                        <form action="/profile/change-password" method="POST">
-                            <div class="mb-3">
-                                <label for="oldPassword" class="form-label">Old Password</label>
-                                <input type="password" class="form-control" id="oldPassword" name="oldPassword">
-                            </div>
-                            <div class="mb-3">
-                                <label for="newPassword" class="form-label">New Password</label>
-                                <input type="password" class="form-control" id="newPassword" name="newPassword">
-                            </div>
-                            <div class="mb-3">
-                                <label for="confirmNewPassword" class="form-label">Confirm New Password</label>
-                                <input type="password" class="form-control" id="confirmNewPassword" name="confirmNewPassword">
-                            </div>
-                            <button type="submit" class="btn btn-primary">Change</button>
-                        </form>
-                    </div>
+                    <br />
+                    <% if(successPassword_msg !='' ){ %>
+                        <div id="successMessage" class="alert alert-success" role="alert">
+                            <%= successPassword_msg %>
+                        </div>
+                        <% } %>
+                            <% if(errorPassword_msg !='' ){ %>
+                                <div id="successMessage" class="alert alert-warning" role="alert">
+                                    <%= errorPassword_msg %>
+                                </div>
+                                <% } %>
+                                    <% if(errorPassword.length> 0){ %>
+                                        <% errorPassword.forEach( (error)=> { %>
+                                            <div id="successMessage" class="alert alert-warning" role="alert">
+                                                <%= error.msg %>
+                                            </div>
+                                            <% }) %>
+                                                <% } %>
+                                                    <div class="card"
+                                                        style="background: linear-gradient(45deg, #49a09d, #5f2c82);">
+                                                        <div class="card-header">
+                                                            <h5 class="card-title">Change Password</h5>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <form action="/profile/change-password" method="POST">
+                                                                <div class="mb-3">
+                                                                    <label for="oldPassword" class="form-label">Old
+                                                                        Password</label>
+                                                                    <input type="password" class="form-control"
+                                                                        id="oldPassword" name="oldPassword">
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="newPassword" class="form-label">New
+                                                                        Password</label>
+                                                                    <input type="password" class="form-control"
+                                                                        id="newPassword" name="newPassword">
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="confirmNewPassword"
+                                                                        class="form-label">Confirm New Password</label>
+                                                                    <input type="password" class="form-control"
+                                                                        id="confirmNewPassword"
+                                                                        name="confirmNewPassword">
+                                                                </div>
+                                                                <button type="submit"
+                                                                    class="btn btn-primary">Change</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
                 </div>
             </div>
-        </div>
-    </section>
-</body>
-<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-<script src="/javascripts/utils.js"></script>
-<script src="/javascripts/matchPassword.js"></script>
+        </section>
+    </body>
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script src="/javascripts/utils.js"></script>
+    <script src="/javascripts/matchPassword.js"></script>
 
 </html>

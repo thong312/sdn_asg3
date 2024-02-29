@@ -14,10 +14,29 @@
             border-color: rgba(0, 0, 0, 0.1); /* Adjust opacity here */
         }
     </style>
+      <script>
+        setTimeout(function () {
+          var successMessage = document.getElementById('successMessage');
+          if (successMessage) {
+            successMessage.style.display = 'none';
+          }
+        }, 3000);
+      </script>
 </head>
 
 <body>
     <%- include('partials/header') %>
+    <% if(success_msg !='' ){ %>
+        <div id="successMessage" class="alert alert-success" role="alert" style="width: 200px; padding: 10px">
+          <%= success_msg %>
+        </div>
+        <% } %>
+  
+          <% if(error_msg !='' ){ %>
+            <div id="successMessage" class="alert alert-warning" role="alert" style="width: 200px; padding: 10px">
+              <%= error_msg %>
+            </div>
+            <% } %>
     <div class="container" style="min-height: 90vh;">
         <div class="row">
             <div class="col-md-12">

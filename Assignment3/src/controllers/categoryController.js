@@ -14,17 +14,31 @@ class categoryController {
 
     createNewCategory(req, res, next) {
         const { categoryName } = req.body;
-        const newCategory = new categories({ categoryName });
-        newCategory.save()
-            .then(() => {
-                res.redirect('/categories');
-            }).catch(next);
+        categories.findOne({ categoryName })
+            .then(existingCategory => {
+                if (existingCategory) {
+                    // Category with the same name already exists
+                    req.flash('error', 'Category with the same name already exists.');
+                    return res.redirect('/categories');
+                } else {
+                    // If category does not exist, create a new one
+                    const newCategory = new categories({ categoryName });
+                    return newCategory.save()
+                        .then(() => {
+                            req.flash('success_msg', 'successfully.');
+                            res.redirect('/categories');
+                        });
+                }
+            })
+            .catch(next);
     }
+    
 
     deleteCategory(req, res, next) {
         const { id } = req.params;
         categories.findByIdAndDelete(id)
             .then(() => {
+                req.flash('success_msg', 'successfully.');
                 res.redirect('/categories');
             }).catch(next);
     }
@@ -51,11 +65,25 @@ class categoryController {
     }
 
     updateCategoryById(req, res, next) {
-        categories.updateOne({_id: req.params.id}, req.body).then(() => {
-            res.redirect('/categories');
-        }).catch(next);
+        // Check if an existing category has the same name
+        categories.findOne({ categoryName: req.body.categoryName, _id: { $ne: req.params.id } })
+            .then(existingCategory => {
+                if (existingCategory) {
+                    // Category with the same name already exists
+                    req.flash('error', 'A category with the same name already exists.');
+                    return res.redirect('/categories');
+                } else {
+                    // Update the category
+                    categories.updateOne({ _id: req.params.id }, req.body)
+                        .then(() => {
+                            req.flash('success_msg', 'Category updated successfully.');
+                            res.redirect('/categories');
+                        })
+                        .catch(next);
+                }
+            })
+            .catch(next);
     }
-
+    
 }
-
 module.exports = new categoryController();

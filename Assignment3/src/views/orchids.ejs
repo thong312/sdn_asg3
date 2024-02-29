@@ -9,6 +9,7 @@
   </title>
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <style>
     #successMessage {
       position: fixed;
@@ -21,7 +22,7 @@
 
     /* Style to resize the images */
     .table img {
-      width: 100px;
+      width: 150px;
       /* Adjust the width as needed */
       height: auto;
       /* Maintain aspect ratio */
@@ -59,7 +60,7 @@
           <% } %>
 
             <div class="container" style="min-height: 100vh;">
-              <div class="mb-3">
+              <div class="mb-3" style="width: 500px">
                 <label for="searchInput" class="form-label"></label>
                 <div class="input-group">
                   <input type="text" class="form-control search-input" id="searchInput" placeholder="Enter Orchid name">
@@ -71,6 +72,8 @@
                   <tr>
                     <th scope="col">Image</th>
                     <th scope="col">Name</th>
+                    <th scope="col">Rating</th>
+                    <th scope="col">Action</th>
                   </tr>
                 </thead>
 
@@ -78,13 +81,33 @@
                   <% orchids.forEach(function(orchid, index){ %>
                     <tr>
                       <td>
-                        <a href="/orchids/<%=orchid._id%>" class="text-decoration-none">
+                       
                           <img src="<%= orchid.image %>" class="img-fluid" alt="<%= orchid.name %>">
-                        </a>
+                       
+                      </td>
+                      <td>
+                      
+                          <%= orchid.name %>
+                        
+                      </td>
+                      <td>
+                   
+                          <% orchid.comments.forEach(function(comment) { %>
+                            <div>
+                              <% for (let i = 1; i <= 5; i++) { %>
+                                  <% if (i <= comment.rating) { %>
+                                      <span class="fa fa-star checked" style="color: yellow;"></span>
+                                  <% } else { %>
+                                      <span class="fa fa-star"></span>
+                                  <% } %>
+                              <% } %>
+                            </div>
+                            <% }); %>
+                        
                       </td>
                       <td>
                         <a href="/orchids/<%=orchid._id%>" class="text-decoration-none">
-                          <%= orchid.name %>
+                          <button class="btn btn-primary btn-sm">View Detail</button>
                         </a>
                       </td>
                     </tr>
@@ -92,6 +115,7 @@
                 </tbody>
 
               </table>
+              
             </div>
 
             <!-- Bootstrap Bundle with Popper -->
